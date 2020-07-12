@@ -20,7 +20,7 @@ pipeline {
 			
 				steps{
 				 
-				 sh "git clone https://github.com/spring-projects/spring-petclinic"
+				 sh "git clone https://github.com/chaitanyakiranch/spring-petclinic.git"
 				
 				}
 	   
@@ -29,21 +29,18 @@ pipeline {
 	// Compile the code with Maven
 			
 			stage ('Compile Stage') {
-
 				steps {
 				
 					sh "cd spring-petclinic && ./mvnw package"
-//					sh "java -jar target/*.jar"			
-		
 				}
-			}		
-        
+			}
+			
+			
+			stage('Build Docker image for spring-pet-clinic') {
+			  steps {
+				sh 'docker build -f Dockerfile -t  docker-spring-pet-clinic .'
+			  }
+			}			
      
         }
-		
-//		post {
-//			always {
-//				cleanWs()
-//			}		
-//		}
  }
